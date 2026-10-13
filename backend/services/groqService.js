@@ -4,18 +4,21 @@ const groq = new Groq({
     apiKey: process.env.GROQ_API_KEY
 });
 
+const GROQ_MODEL = process.env.GROQ_MODEL || "qwen/qwen3.8-27b";
+
 async function generateWithGroq(prompt) {
 
     const completion =
         await groq.chat.completions.create({
-            model: "llama-3.3-70b-versatile",
+            model: GROQ_MODEL,
             messages: [
                 {
                     role: "user",
                     content: prompt
                 }
             ],
-            temperature: 0.2
+            temperature: 0.2,
+            max_tokens: 1024
         });
 
     let response =
